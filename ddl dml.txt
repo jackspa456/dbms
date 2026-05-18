@@ -1,0 +1,94 @@
+CREATE DATABASE college_db;
+Query OK, 1 row affected (0.01 sec)
+USE college_db;
+Database changed
+CREATE TABLE student(
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    city VARCHAR(50),
+    marks INT
+);
+Query OK, 0 rows affected (0.05 sec)
+INSERT INTO student
+VALUES
+(1,'amit',20,'pune',85),
+(2,'neha',22,'mumbai',90),
+(3,'rahul',21,'delhi',75);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+SELECT * FROM student;
++----+-------+------+--------+-------+
+| id | name  | age  | city   | marks |
++----+-------+------+--------+-------+
+|  1 | amit  |   20 | pune   |    85 |
+|  2 | neha  |   22 | mumbai |    90 |
+|  3 | rahul |   21 | delhi  |    75 |
++----+-------+------+--------+-------+
+3 rows in set (0.00 sec)
+
+UPDATE student SET marks=95 WHERE id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+SELECT * FROM student;
++----+-------+------+--------+-------+
+| id | name  | age  | city   | marks |
++----+-------+------+--------+-------+
+|  1 | amit  |   20 | pune   |    85 |
+|  2 | neha  |   22 | mumbai |    95 |
+|  3 | rahul |   21 | delhi  |    75 |
++----+-------+------+--------+-------+
+3 rows in set (0.00 sec)
+
+SELECT * FROM student WHERE id=1;
++----+------+------+------+-------+
+| id | name | age  | city | marks |
++----+------+------+------+-------+
+|  1 | amit |   20 | pune |    85 |
++----+------+------+------+-------+
+1 row in set (0.00 sec)
+
+RENAME TABLE student TO student_db;
+Query OK, 0 rows affected (0.06 sec)
+
+RENAME TABLE student_db TO student;
+Query OK, 0 rows affected (0.03 sec)
+
+DELETE FROM student WHERE id=3;
+Query OK, 1 row affected (0.04 sec)
+
+SELECT * FROM student;
++----+-------+------+--------+-------+
+| id | name  | age  | city   | marks |
++----+-------+------+--------+-------+
+|  1 | amit  |   20 | pune   |    85 |
+|  2 | neha  |   22 | mumbai |    95 |
++----+-------+------+--------+-------+
+2 rows in set (0.00 sec)
+
+ALTER TABLE student ADD email VARCHAR(50);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+SELECT * FROM student;
++----+-------+------+--------+-------+-------+
+| id | name  | age  | city   | marks | email |
++----+-------+------+--------+-------+-------+
+|  1 | amit  |   20 | pune   |    85 | NULL  |
+|  2 | neha  |   22 | mumbai |    95 | NULL  |
++----+-------+------+--------+-------+-------+
+2 rows in set (0.00 sec)
+
+TRUNCATE TABLE student;
+Query OK, 0 rows affected (0.09 sec)
+
+SELECT * FROM student;
+Empty set (0.00 sec)
+
+DROP TABLE student;
+Query OK, 0 rows affected (0.03 sec)
+
+DROP DATABASE college_db;
+Query OK, 0 rows affected (0.01 sec)

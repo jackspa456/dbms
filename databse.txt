@@ -1,0 +1,88 @@
+CREATE DATABASE startersql;
+Query OK, 1 row affected (0.01 sec)
+
+USE startersql;
+Database changed
+
+CREATE TABLE book(
+    bookID INT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    publisher VARCHAR(255),
+    yearPublished INT
+);
+Query OK, 0 rows affected (0.05 sec)
+
+INSERT INTO book(bookID,title,author,publisher,yearPublished)
+VALUES
+(1,'wings of fire','DR.A.P.J.Abdul Kalam','Universities Press',1999),
+(2,'The Discovery of India','Jawaharlal Neheru','Oxford University Press',1946),
+(3,'Gitanjali','Rabindranath Tagore','Macmillan',1910);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+CREATE TABLE member(
+    memberID INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    phoneNumber VARCHAR(15),
+    Email VARCHAR(255)
+);
+Query OK, 0 rows affected (0.05 sec)
+
+INSERT INTO member(memberID,name,address,phoneNumber,Email)
+VALUES
+(1,'abc','sangamner','9876543211','abc@gmail.com'),
+(2,'pqr','nagar','9456789324','pqr@gmail.com'),
+(3,'xyz','pune','9876543345','xyz@gmail.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+CREATE TABLE loan(
+    loanID INT PRIMARY KEY,
+    bookID INT,
+    memberID INT,
+    loanDate DATE,
+    returnDate DATE,
+    FOREIGN KEY(bookID) REFERENCES book(bookID),
+    FOREIGN KEY(memberID) REFERENCES member(memberID)
+);
+Query OK, 0 rows affected (0.06 sec)
+
+INSERT INTO loan(loanID,bookID,memberID,loanDate,returnDate)
+VALUES
+(1,1,1,'2025-02-01','2025-02-15'),
+(2,2,2,'2025-02-03','2025-02-17'),
+(3,3,3,'2025-02-05','2025-02-19');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+SELECT * FROM book;
++--------+------------------------+----------------------+-------------------------+---------------+
+| bookID | title                  | author               | publisher               | yearPublished |
++--------+------------------------+----------------------+-------------------------+---------------+
+|      1 | wings of fire          | DR.A.P.J.Abdul Kalam | Universities Press      |          1999 |
+|      2 | The Discovery of India | Jawaharlal Neheru    | Oxford University Press |          1946 |
+|      3 | Gitanjali              | Rabindranath Tagore  | Macmillan               |          1910 |
++--------+------------------------+----------------------+-------------------------+---------------+
+3 rows in set (0.03 sec)
+
+SELECT * FROM member;
++----------+------+-----------+-------------+---------------+
+| memberID | name | address   | phoneNumber | Email         |
++----------+------+-----------+-------------+---------------+
+|        1 | abc  | sangamner | 9876543211  | abc@gmail.com |
+|        2 | pqr  | nagar     | 9456789324  | pqr@gmail.com |
+|        3 | xyz  | pune      | 9876543345  | xyz@gmail.com |
++----------+------+-----------+-------------+---------------+
+3 rows in set (0.00 sec)
+
+SELECT * FROM loan;
++--------+--------+----------+------------+------------+
+| loanID | bookID | memberID | loanDate   | returnDate |
++--------+--------+----------+------------+------------+
+|      1 |      1 |        1 | 2025-02-01 | 2025-02-15 |
+|      2 |      2 |        2 | 2025-02-03 | 2025-02-17 |
+|      3 |      3 |        3 | 2025-02-05 | 2025-02-19 |
++--------+--------+----------+------------+------------+
+3 rows in set (0.00 sec)

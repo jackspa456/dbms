@@ -1,0 +1,308 @@
+CREATE DATABASE CollegeDB;
+Query OK, 1 row affected (0.02 sec)
+USE CollegeDB;
+Database changed
+CREATE TABLE Student(
+    studentID INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    department VARCHAR(50),
+    marks INT
+);
+Query OK, 0 rows affected (0.11 sec)
+INSERT INTO Student
+VALUES
+(1,'amit',20,'computer',85),
+(2,'nehe',21,'IT',90),
+(3,'rahul',19,'computer',75),
+(4,'priya',22,'electronics',88),
+(5,'sneha',20,'IT',92);
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+SELECT * FROM Student;
++-----------+-------+------+-------------+-------+
+| studentID | name  | age  | department  | marks |
++-----------+-------+------+-------------+-------+
+|         1 | amit  |   20 | computer    |    85 |
+|         2 | nehe  |   21 | IT          |    90 |
+|         3 | rahul |   19 | computer    |    75 |
+|         4 | priya |   22 | electronics |    88 |
+|         5 | sneha |   20 | IT          |    92 |
++-----------+-------+------+-------------+-------+
+5 rows in set (0.00 sec)
+
+ALTER TABLE Student ADD email VARCHAR(50);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+SELECT * FROM Student;
++-----------+-------+------+-------------+-------+-------+
+| studentID | name  | age  | department  | marks | email |
++-----------+-------+------+-------------+-------+-------+
+|         1 | amit  |   20 | computer    |    85 | NULL  |
+|         2 | nehe  |   21 | IT          |    90 | NULL  |
+|         3 | rahul |   19 | computer    |    75 | NULL  |
+|         4 | priya |   22 | electronics |    88 | NULL  |
+|         5 | sneha |   20 | IT          |    92 | NULL  |
++-----------+-------+------+-------------+-------+-------+
+5 rows in set (0.00 sec)
+
+UPDATE Student SET email='amit@gmail' WHERE studentID=1;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+UPDATE Student SET email='neha@gmail' WHERE studentID=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+UPDATE Student SET email='rahul@gmail' WHERE studentID=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+UPDATE Student SET email='priya@gmail' WHERE studentID=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+UPDATE Student SET email='sneha@gmail' WHERE studentID=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+SELECT * FROM Student;
++-----------+-------+------+-------------+-------+--------------+
+| studentID | name  | age  | department  | marks | email        |
++-----------+-------+------+-------------+-------+--------------+
+|         1 | amit  |   20 | computer    |    85 | amit@gmail   |
+|         2 | nehe  |   21 | IT          |    90 | neha@gmail   |
+|         3 | rahul |   19 | computer    |    75 | rahul@gmail  |
+|         4 | priya |   22 | electronics |    88 | priya@gmail  |
+|         5 | sneha |   20 | IT          |    92 | sneha@gmail  |
++-----------+-------+------+-------------+-------+--------------+
+5 rows in set (0.00 sec)
+
+CREATE INDEX idx_name ON Student(name);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+SHOW INDEX idx_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idx_name' at line 1
+
+SHOW INDEX FROM Student;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
+| Student |          0 | PRIMARY  |            1 | studentID   | A         |           5 |     NULL | NULL   |      | BTREE      |         |               | YES     |
+| Student |          1 | idx_name |            1 | name        | A         |           5 |     NULL | NULL   | YES  | BTREE      |         |               | YES     |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
+2 rows in set (0.00 sec)
+
+DROP INDEX idx_name ON Student;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+SELECT * FROM Student WHERE age<=20;
++-----------+-------+------+------------+-------+--------------+
+| studentID | name  | age  | department | marks | email        |
++-----------+-------+------+------------+-------+--------------+
+|         1 | amit  |   20 | computer   |    85 | amit@gmail   |
+|         3 | rahul |   19 | computer   |    75 | rahul@gmail  |
+|         5 | sneha |   20 | IT         |    92 | sneha@gmail  |
++-----------+-------+------+------------+-------+--------------+
+3 rows in set (0.00 sec)
+
+SELECT * FROM Student WHERE marks>80;
++-----------+-------+------+-------------+-------+--------------+
+| studentID | name  | age  | department  | marks | email        |
++-----------+-------+------+-------------+-------+--------------+
+|         1 | amit  |   20 | computer    |    85 | amit@gmail   |
+|         2 | nehe  |   21 | IT          |    90 | neha@gmail   |
+|         4 | priya |   22 | electronics |    88 | priya@gmail  |
+|         5 | sneha |   20 | IT          |    92 | sneha@gmail  |
++-----------+-------+------+-------------+-------+--------------+
+4 rows in set (0.00 sec)
+
+SELECT * FROM Student WHERE department='IT';
++-----------+-------+------+------------+-------+--------------+
+| studentID | name  | age  | department | marks | email        |
++-----------+-------+------+------------+-------+--------------+
+|         2 | nehe  |   21 | IT         |    90 | neha@gmail   |
+|         5 | sneha |   20 | IT         |    92 | sneha@gmail  |
++-----------+-------+------+------------+-------+--------------+
+2 rows in set (0.00 sec)
+
+SELECT * FROM Student WHERE marks!=75;
++-----------+-------+------+-------------+-------+--------------+
+| studentID | name  | age  | department  | marks | email        |
++-----------+-------+------+-------------+-------+--------------+
+|         1 | amit  |   20 | computer    |    85 | amit@gmail   |
+|         2 | nehe  |   21 | IT          |    90 | neha@gmail   |
+|         4 | priya |   22 | electronics |    88 | priya@gmail  |
+|         5 | sneha |   20 | IT          |    92 | sneha@gmail  |
++-----------+-------+------+-------------+-------+--------------+
+4 rows in set (0.00 sec)
+
+SELECT * FROM Student WHERE name LIKE 'a%';
++-----------+------+------+------------+-------+-------------+
+| studentID | name | age  | department | marks | email       |
++-----------+------+------+------------+-------+-------------+
+|         1 | amit |   20 | computer   |    85 | amit@gmail  |
++-----------+------+------+------------+-------+-------------+
+1 row in set (0.00 sec)
+
+SELECT * FROM Student WHERE name LIKE '_e%';
++-----------+------+------+------------+-------+-------------+
+| studentID | name | age  | department | marks | email       |
++-----------+------+------+------------+-------+-------------+
+|         2 | nehe |   21 | IT         |    90 | neha@gmail  |
++-----------+------+------+------------+-------+-------------+
+1 row in set (0.00 sec)
+
+SELECT department,AVG(marks)
+FROM Student
+GROUP BY department
+HAVING AVG(marks)>80;
++-------------+------------+
+| department  | AVG(marks) |
++-------------+------------+
+| computer    |    80.0000 |
+| IT          |    91.0000 |
+| electronics |    88.0000 |
++-------------+------------+
+3 rows in set (0.00 sec)
+
+SELECT department,AVG(marks)
+FROM Student
+GROUP BY department;
++-------------+------------+
+| department  | AVG(marks) |
++-------------+------------+
+| computer    |    80.0000 |
+| IT          |    91.0000 |
+| electronics |    88.0000 |
++-------------+------------+
+3 rows in set (0.00 sec)
+
+SELECT name,marks
+FROM Student
+WHERE marks > (SELECT AVG(marks) FROM Student);
++-------+-------+
+| name  | marks |
++-------+-------+
+| nehe  |    90 |
+| priya |    88 |
+| sneha |    92 |
++-------+-------+
+3 rows in set (0.00 sec)
+
+CREATE TABLE Student2(
+    studentID INT,
+    name VARCHAR(50)
+);
+Query OK, 0 rows affected (0.07 sec)
+
+INSERT INTO Student2 VALUES (1,'amit'),(6,'rohan');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+SELECT name FROM Student
+UNION
+SELECT name FROM Student2;
++-------+
+| name  |
++-------+
+| amit  |
+| nehe  |
+| rahul |
+| priya |
+| sneha |
+| rohan |
++-------+
+6 rows in set (0.00 sec)
+
+SELECT name FROM Student
+UNION ALL
+SELECT name FROM Student2;
++-------+
+| name  |
++-------+
+| amit  |
+| nehe  |
+| rahul |
+| priya |
+| sneha |
+| amit  |
+| rohan |
++-------+
+7 rows in set (0.00 sec)
+
+SELECT name FROM Student
+INTERSECT
+SELECT name FROM Student2;
++------+
+| name |
++------+
+| amit |
++------+
+1 row in set (0.00 sec)
+
+SELECT name FROM Student
+EXCEPT
+SELECT name FROM Student2;
++-------+
+| name  |
++-------+
+| nehe  |
+| rahul |
+| priya |
+| sneha |
++-------+
+4 rows in set (0.00 sec)
+
+CREATE VIEW student_view AS
+SELECT name,marks FROM Student;
+Query OK, 0 rows affected (0.01 sec)
+
+SELECT * FROM student_view;
++-------+-------+
+| name  | marks |
++-------+-------+
+| amit  |    85 |
+| nehe  |    90 |
+| rahul |    75 |
+| priya |    88 |
+| sneha |    92 |
++-------+-------+
+5 rows in set (0.00 sec)
+
+DROP VIEW student_view;
+Query OK, 0 rows affected (0.01 sec)
+
+SELECT * FROM Student ORDER BY marks ASC;
++-----------+-------+------+-------------+-------+--------------+
+| studentID | name  | age  | department  | marks | email        |
++-----------+-------+------+-------------+-------+--------------+
+|         3 | rahul |   19 | computer    |    75 | rahul@gmail  |
+|         1 | amit  |   20 | computer    |    85 | amit@gmail   |
+|         4 | priya |   22 | electronics |    88 | priya@gmail  |
+|         2 | nehe  |   21 | IT          |    90 | neha@gmail   |
+|         5 | sneha |   20 | IT          |    92 | sneha@gmail  |
++-----------+-------+------+-------------+-------+--------------+
+5 rows in set (0.00 sec)
+
+SELECT * FROM Student ORDER BY marks DESC;
++-----------+-------+------+-------------+-------+--------------+
+| studentID | name  | age  | department  | marks | email        |
++-----------+-------+------+-------------+-------+--------------+
+|         5 | sneha |   20 | IT          |    92 | sneha@gmail  |
+|         2 | nehe  |   21 | IT          |    90 | neha@gmail   |
+|         4 | priya |   22 | electronics |    88 | priya@gmail  |
+|         1 | amit  |   20 | computer    |    85 | amit@gmail   |
+|         3 | rahul |   19 | computer    |    75 | rahul@gmail  |
++-----------+-------+------+-------------+-------+--------------+
+5 rows in set (0.00 sec)
+
+DROP TABLE Student;
+Query OK, 0 rows affected (0.05 sec)
+
+DROP TABLE Student2;
+Query OK, 0 rows affected (0.04 sec)

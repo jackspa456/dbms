@@ -1,0 +1,29 @@
+CREATE DATABASE demo_database;
+Query OK, 1 row affected (0.05 sec)
+
+USE demo_database;
+Database changed
+
+DELIMITER //
+CREATE PROCEDURE ADDITION(
+    IN a INT,
+    IN b INT,
+    OUT result INT
+)
+BEGIN
+    SET result = a + b;
+END//
+Query OK, 0 rows affected (0.03 sec)
+
+DELIMITER ;
+
+CALL ADDITION(5,8,@res);
+Query OK, 0 rows affected (0.01 sec)
+
+SELECT @res;
++------+
+| @res |
++------+
+|   13 |
++------+
+1 row in set (0.00 sec)

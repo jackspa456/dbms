@@ -1,0 +1,68 @@
+CREATE DATABASE pract7;
+Query OK, 1 row affected (0.14 sec)
+
+USE prcat7;
+ERROR 1049 (42000): Unknown database 'prcat7'
+
+USE pract7;
+Database changed
+
+CREATE TABLE employee(
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    salary INT
+);
+Query OK, 0 rows affected (0.13 sec)
+
+INSERT INTO employee
+VALUES
+(1,'amit',30000),
+(2,'neha',40000),
+(3,'raj',35000);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+SELECT * FROM employee;
++----+-------+--------+
+| id | name  | salary |
++----+-------+--------+
+|  1 | amit  |  30000 |
+|  2 | neha  |  40000 |
+|  3 | raj   |  35000 |
++----+-------+--------+
+3 rows in set (0.00 sec)
+
+DELIMITER //
+CREATE FUNCTION calc_bonus(
+    sal INT
+)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE bonus INT;
+    SET bonus = sal * 0.10;
+    RETURN bonus;
+END //
+Query OK, 0 rows affected (0.02 sec)
+
+DELIMITER ;
+
+SELECT calc_bonus(50000);
++--------------------+
+| calc_bonus(50000)  |
++--------------------+
+|               5000 |
++--------------------+
+1 row in set (0.00 sec)
+
+SELECT name,salary,
+       calc_bonus(salary) AS bonus
+FROM employee;
++-------+--------+-------+
+| name  | salary | bonus |
++-------+--------+-------+
+| amit  |  30000 |  3000 |
+| neha  |  40000 |  4000 |
+| raj   |  35000 |  3500 |
++-------+--------+-------+
+3 rows in set (0.00 sec)
